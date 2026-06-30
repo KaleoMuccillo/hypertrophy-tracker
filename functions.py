@@ -118,7 +118,7 @@ def prog_first(pesos):
     else:
         print("Sem progressão desde o início.")
 
-def show_stats(pesos):
+def show_stats(pesos, profile):
     val = get_pesos(pesos)
     if not val:
         print("Nenhum registro disponível")
@@ -143,3 +143,20 @@ def show_stats(pesos):
 
     prog_first(pesos)
     prog_last(pesos)
+
+    bmr = estimate_bmr(profile, pesos)
+    if bmr is not None:
+        print(f"Gasto Calórico estimado em repouso (BMR): {bmr:.2f} kcal/dia")
+
+def estimate_bmr(profile, pesos):
+    try:
+        age = int(profile.get("idade", 0))
+        height = float(profile.get("altura", 0))
+        weight = float(pesos[-1].get("peso", 0))
+    except ValueError:
+        return None
+
+    sex = profile.get("sexo", "").strip().lower()
+    if sex.startswith("m"):
+        return 10 * weight + 6.25 * height - 5 * age + 5
+    return 10 * weight + 6.25 * height - 5 * age - 161

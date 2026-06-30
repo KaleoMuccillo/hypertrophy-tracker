@@ -43,7 +43,7 @@ while True:
     elif opc == "2":
         fc.show_history(pesos)
     elif opc == "3":
-        fc.show_stats(pesos)
+        fc.show_stats(pesos, profile)
     elif opc == "4":
         while True:
             print("\n===== Perfil do Usuário =====")
